@@ -3,7 +3,8 @@ package com.pokeLab.Api.pokeApi.authentication.infrastructure.persistence.mysql.
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.pokeLab.Api.pokeApi.authentication.domain.entity.LoginRequest;
+import com.pokeLab.Api.pokeApi.authentication.domain.entity.LoginBody;
+
 import com.pokeLab.Api.pokeApi.authentication.domain.repository.AuthRepository;
 import com.pokeLab.Api.pokeApi.shared.exception.AuthException;
 
@@ -27,7 +28,7 @@ public class AuthRepositoryImpl implements AuthRepository {
     }
 
     @Override
-    public String verifyPassword(LoginRequest request) {
+    public String verifyPassword(LoginBody request) {
         String sql = "SELECT id FROM users WHERE username = ? AND password = ?";
         try {
             return jdbcTemplate.queryForObject(sql, String.class, request.getUsername(), request.getPassword());
@@ -37,7 +38,7 @@ public class AuthRepositoryImpl implements AuthRepository {
     }
 
     @Override
-    public Integer checkAccountStatus(LoginRequest request) {
+    public Integer checkAccountStatus(LoginBody request) {
         String sql = "SELECT status FROM users WHERE username = ? AND password = ?";
         try {
             return jdbcTemplate.queryForObject(sql, Integer.class, request.getUsername(), request.getPassword());
